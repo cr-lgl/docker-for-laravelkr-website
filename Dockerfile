@@ -60,13 +60,12 @@ RUN ln -snf /usr/share/zoneinfo/${TIME_ZONE} /etc/localtime && echo ${TIME_ZONE}
 # Composer Setup
 #
 
-ARG COMPOSER_VERSION=1.10.10
+ARG COMPOSER_VERSION=2.0.2
 ARG COMPOSER_REPO_PACKAGIST='https://packagist.jp'
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION} && \
-    composer config -g repos.packagist composer ${COMPOSER_REPO_PACKAGIST} && \
-    composer global require hirak/prestissimo --no-interaction
+    composer config -g repos.packagist composer ${COMPOSER_REPO_PACKAGIST}
 
 #
 # Bash Setup
@@ -80,5 +79,4 @@ RUN echo 'if [ -n "$BASH_VERSION" ]; then \n\
              fi \n\
          fi' >> ~/.profile
 
-USER root
 WORKDIR /var/www/html
